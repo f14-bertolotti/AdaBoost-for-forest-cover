@@ -3,7 +3,6 @@ import wget
 import math
 import numpy
 import random
-import plotly
 from Utils     import Utils
 from Choicers  import Choicers
 from AdaBoost  import AdaBoost
