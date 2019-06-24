@@ -12,10 +12,7 @@ from Insider   import Insider
 if __name__ == '__main__':
 
 	# fix the seed ###
-	random.seed(14)
-
-	# plotly username ###
-	plotly.tools.set_credentials_file(username='f14', api_key='OCD3NkwqAIy0QgiHdAW7')
+	random.seed(42)
 
 	# images directory ###
 	if not os.path.isdir('./images'):
@@ -31,9 +28,9 @@ if __name__ == '__main__':
 
 	# parameter settings ###
 	dataset_path = "./data/forest_dataset"  # dataset path
-	T            = 10001	                # no. Adaboost step
+	T            = 1001	         	        # no. Adaboost step
 	step         = 0.01 					# step for percentiles generation
-	npartitions  = 3						# np. partiotion for cross validation
+	prt_list     = [4]						# list of possible partition in cross validation
 
 
 	# data preprocessing ###
@@ -47,29 +44,60 @@ if __name__ == '__main__':
 	
 	random.shuffle(data)
 
+	test_data     = data[:len(data)//3 ]
+	training_data = data[ len(data)//3:]
+	best_algo     = None 
+	best_val_acc  = 0
+
 	# training ###
-	partitions = Utils.getPartitions(data, npartitions)
+	for npartitions in prt_list:
+		partitions = Utils.getPartitions(training_data, npartitions)
 
-	for choicer, name in [(Choicers.best_choicer                (tests, 0.01), "best_with_threshold_"     ),
-				   		  (Choicers.random_choicer              (tests, 0   ), "random_choice_"           ), 
-				   		  (Choicers.random_choicer              (tests, 0.01), "random_with_threshold_"   ),
-				   		  (Choicers.random_selector_best_choicer(tests, 0.5 ), "random_selctor_best_test_")]:
+		for choicer, name in [(Choicers.best_choicer                (tests, 0.01), "best_with_threshold_"     ),
+					   		  #(Choicers.random_choicer              (tests, 0   ), "random_choice_"           ), 
+					   		  #(Choicers.random_choicer              (tests, 0.01), "random_with_threshold_"   ),
+					   		  (Choicers.random_selector_best_choicer(tests, 0.5 ), "random_selctor_best_test_")]:
 
-		print("training for {}".format(name))
-
-		for clss in classes:
-			print("training for class {}.".format(clss))
-
-			insider = Insider(clss,npartitions,name,10,T)
-
-			for i in range(npartitions):
-				print("testing for partition {}.".format(i))
-				training_set         = Utils.onevsall(Utils.flat(partitions[:i]+partitions[i+1:]), clss)
-				test_set             = Utils.onevsall(partitions[i], clss)
-				insider.training_set = training_set
-				insider.test_set     = test_set
-				weights, predictors  = AdaBoost.train(T, training_set, mesurer = insider, choicer = choicer)
-
-			insider.save()
+			print("training for {}".format(name))
 
 
+			avg_best_on_classes = None
+			for j, clss in enumerate(classes):
+				print("training for class {}.".format(clss))
+
+				insider = Insider(clss,npartitions,name,10,T)
+
+				for i in range(npartitions):
+					print("testing for partition {}.".format(i))
+					training_set         = Utils.onevsall(Utils.flat(partitions[:i]+partitions[i+1:]), clss)
+					test_set             = Utils.onevsall(partitions[i]                              , clss)
+					insider.training_set = training_set
+					insider.test_set     = test_set
+					weights, predictors  = AdaBoost.train(T, training_set, mesurer = insider, choicer = choicer)
+
+				insider.save()
+				insider.close()
+
+				if avg_best_on_classes == None: avg_best_on_classes = insider.best_val_acc()
+				else: avg_best_on_classes += (avg_best_on_classes - insider.best_val_acc())/(j+1)
+
+			if best_val_acc < avg_best_on_classes:
+				best_val_acc = avg_best_on_classes
+				best_algo    = choicer
+
+
+	# best training ###
+	test_acc = None
+	for j,clss in enumerate(classes):
+		insider              = Insider(clss,1,"best_predictor_",10,T)
+		training_set         = Utils.onevsall(training_data, clss)
+		test_set             = Utils.onevsall(test_data    , clss)
+		insider.training_set = training_set
+		insider.test_set     = test_set	
+		weights, predictors  = AdaBoost.train(T, training_set, mesurer = insider, choicer = best_algo)
+		if test_acc == None: test_acc  = insider.best_val_acc()
+		else: 				 test_acc += (test_acc - insider.best_val_acc())/(j+1)
+		insider.save()
+
+
+	print("best test acc: {}".format(test_acc))

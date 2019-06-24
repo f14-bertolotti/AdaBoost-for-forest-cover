@@ -4,13 +4,14 @@ plt.style.use('fivethirtyeight')
 
 
 class Insider:
-	def __init__(self, clss, npartitions, name, step, max_iteration):
+	def __init__(self, clss, npartitions, name, step, max_iteration, open_plot = True):
 		self.data 			  = dict()
 		self.clss 			  = clss
 		self.step 			  = step
 		self.max_iteration 	  = max_iteration
 		self.npartitions 	  = npartitions
 		self.name 			  = name
+		self.open_plot   	  = open_plot
 		plt.ion()
 		self.figure, self.axs = plt.subplots(3,1,figsize=(10, 10),tight_layout=True)
 
@@ -46,6 +47,12 @@ class Insider:
 										    val_prc, trn_rec, val_rec, iteration))
 
 			self.plot()
+
+	def best_val_acc(self):
+		best_val_acc = 0
+		for k,v in self.data.items():
+			best_val_acc = max(best_val_acc, v[2])
+		return best_val_acc
 
 
 	def plot(self):
@@ -86,3 +93,6 @@ class Insider:
 	def save(self):
 		title = self.name+'class_{}_cross_val_{}'.format(self.clss, self.npartitions)
 		self.figure.savefig("./images/" + title)
+
+	def close(self):
+		plt.close()

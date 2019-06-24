@@ -59,6 +59,10 @@ class AdaBoost:
 			if predictors[-1] == None: return weights, predictors
 
 			error = AdaBoost.get_error(predictors[-1], prbs, training_set)
+			
+			# limit cases ###
+			if error == 1: error -= 0.000001
+			if error == 0: error += 0.000001 
 
 			# get the new weight ###
 			weights.append(0.5 * math.log((1-error) / error))
