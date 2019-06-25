@@ -28,8 +28,8 @@ if __name__ == '__main__':
 
 	# parameter settings ###
 	dataset_path = "./data/forest_dataset"  # dataset path
-	T            = 101	         	        # no. Adaboost step
-	step         = 0.01 					# step for percentiles generation
+	T            = 1001	         	        # no. Adaboost step
+	step         = 0.001 					# step for percentiles generation
 	prt_list     = [4]						# list of possible partition in cross validation
 
 

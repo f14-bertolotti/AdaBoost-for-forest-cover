@@ -14,14 +14,22 @@ class Choicers:
 		tests = Utils.flat(tests)
 		if epsilon > 0:
 			def choicer(probabilities, training_set):
-				''' Returns a random choice that has error != 0.5 if there is one, None otherwise. '''
+				''' Returns a random choice that has error != 0.5 if there is one, the best encountered otherwise. '''
 				choices = list(range(len(tests)))
 				random.shuffle(choices)
+				best_choice = 0
+				best_error  = 0.5
 				# print(choices[0])
 				for choice in choices:
 					error = AdaBoost.get_error(tests[choice], probabilities, training_set)
 					if error >= 0.5 + epsilon or error <= 0.5 - epsilon: return tests[choice]
-				return None
+					elif error >= best_error:
+						best_error = error
+						best_test  = tests[choice]
+					elif 1-error >= best_error:
+						best_error = 1-error
+						best_test  = tests[choice]
+				return best_test if best_error != 0.5 else None
 
 			return choicer
 
