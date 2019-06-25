@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
 	# parameter settings ###
 	dataset_path = "./data/forest_dataset"  # dataset path
-	T            = 1001	         	        # no. Adaboost step
+	T            = 101	         	        # no. Adaboost step
 	step         = 0.01 					# step for percentiles generation
 	prt_list     = [4]						# list of possible partition in cross validation
 
@@ -54,14 +54,14 @@ if __name__ == '__main__':
 		partitions = Utils.getPartitions(training_data, npartitions)
 
 		for choicer, name in [(Choicers.best_choicer                (tests, 0.01), "best_with_threshold_"     ),
-					   		  #(Choicers.random_choicer              (tests, 0   ), "random_choice_"           ), 
-					   		  #(Choicers.random_choicer              (tests, 0.01), "random_with_threshold_"   ),
+					   		  (Choicers.random_choicer              (tests, 0   ), "random_choice_"           ), 
+					   		  (Choicers.random_choicer              (tests, 0.01), "random_with_threshold_"   ),
 					   		  (Choicers.random_selector_best_choicer(tests, 0.5 ), "random_selctor_best_test_")]:
 
 			print("training for {}".format(name))
 
 
-			avg_best_on_classes = None
+			avg_best_on_classes = 0
 			for j, clss in enumerate(classes):
 				print("training for class {}.".format(clss))
 
@@ -78,26 +78,26 @@ if __name__ == '__main__':
 				insider.save()
 				insider.close()
 
-				if avg_best_on_classes == None: avg_best_on_classes = insider.best_val_acc()
-				else: avg_best_on_classes += (avg_best_on_classes - insider.best_val_acc())/(j+1)
+				avg_best_on_classes += (insider.best_val_acc() - avg_best_on_classes)/(j+1)
 
-			if best_val_acc < avg_best_on_classes:
+			if best_val_acc  < avg_best_on_classes:
 				best_val_acc = avg_best_on_classes
-				best_algo    = choicer
+				best_algo    = (choicer,name)
 
 
 	# best training ###
-	test_acc = None
+	test_acc = 0
 	for j,clss in enumerate(classes):
+		print("best predictor {} for class {}".format(best_algo[1], clss))
 		insider              = Insider(clss,1,"best_predictor_",10,T)
 		training_set         = Utils.onevsall(training_data, clss)
 		test_set             = Utils.onevsall(test_data    , clss)
 		insider.training_set = training_set
 		insider.test_set     = test_set	
-		weights, predictors  = AdaBoost.train(T, training_set, mesurer = insider, choicer = best_algo)
-		if test_acc == None: test_acc  = insider.best_val_acc()
-		else: 				 test_acc += (test_acc - insider.best_val_acc())/(j+1)
+		weights, predictors  = AdaBoost.train(T, training_set, mesurer = insider, choicer = best_algo[0])
+		test_acc += (insider.best_val_acc()-test_acc)/(j+1)
 		insider.save()
+		insider.close()
 
 
 	print("best test acc: {}".format(test_acc))
