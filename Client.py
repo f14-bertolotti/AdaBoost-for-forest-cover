@@ -5,7 +5,7 @@ import numpy
 import random
 from Utils     import Utils
 from Choicers  import Choicers
-from AdaBoost  import AdaBoost
+from Adaboost  import Adaboost
 from Measurers import Measurers
 from Insider   import Insider
 
