@@ -5,7 +5,7 @@ import numpy
 import random
 from Utils import Utils
 
-class AdaBoost:
+class Adaboost:
 	def predict(predictor, sample):
 		''' A stump predictor is defined by a selector and a threshold.
 			Returns:	The response of the respective test.
@@ -22,7 +22,7 @@ class AdaBoost:
 						predictors 		Predictors genereted from AdaBoost.
 						sample 			A sample to be predicted.
 			Returns: 	+1 positive prediction, -1 otherwise.'''
-		return Utils.sgn(sum([w*AdaBoost.predict(p,sample) for w,p in zip(weights,predictors)]))
+		return Utils.sgn(sum([w*Adaboost.predict(p,sample) for w,p in zip(weights,predictors)]))
 
 
 	def is_correct(prediction, sample):
@@ -35,7 +35,7 @@ class AdaBoost:
 			Args: 		predictor 		a tuple of a selector and a threshold.
 						probabilities 	adaboost prbs for the samples.
 						training_set	just samples.'''
-		prb_right = sum([p for sample,p in zip(training_set, probabilities) if AdaBoost.is_correct(AdaBoost.predict(predictor,sample),sample)])
+		prb_right = sum([p for sample,p in zip(training_set, probabilities) if Adaboost.is_correct(Adaboost.predict(predictor,sample),sample)])
 		prb_wrong = 1 - prb_right
 		return prb_wrong
 
@@ -58,7 +58,7 @@ class AdaBoost:
 			predictors.append(choicer(prbs, training_set))
 			if predictors[-1] == None: return weights, predictors
 
-			error = AdaBoost.get_error(predictors[-1], prbs, training_set)
+			error = Adaboost.get_error(predictors[-1], prbs, training_set)
 			
 			# limit cases ###
 			if error == 1: error -= 0.000001
@@ -68,7 +68,7 @@ class AdaBoost:
 			weights.append(0.5 * math.log((1-error) / error))
 			
 			# calc the new probabilities ###
-			prbs_tmp = [(prbs[t]*math.exp(-weights[i]*AdaBoost.predict(predictors[i],sample)*sample[-1])) for t,sample in enumerate(training_set)]
+			prbs_tmp = [(prbs[t]*math.exp(-weights[i]*Adaboost.predict(predictors[i],sample)*sample[-1])) for t,sample in enumerate(training_set)]
 			prbs_sum = sum(prbs_tmp)                  # normalization factor.
 			prbs     = [p/prbs_sum for p in prbs_tmp] # normalize, so that it sum to 1.
 

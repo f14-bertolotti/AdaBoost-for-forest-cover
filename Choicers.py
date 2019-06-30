@@ -1,7 +1,7 @@
 
 import random 
 from Utils import Utils
-from AdaBoost import AdaBoost
+from Adaboost import Adaboost
 
 class Choicers:
 
@@ -21,7 +21,7 @@ class Choicers:
 				best_error  = 0.5
 				# print(choices[0])
 				for choice in choices:
-					error = AdaBoost.get_error(tests[choice], probabilities, training_set)
+					error = Adaboost.get_error(tests[choice], probabilities, training_set)
 					if error >= 0.5 + epsilon or error <= 0.5 - epsilon: return tests[choice]
 					elif error >= best_error:
 						best_error = error
@@ -56,7 +56,7 @@ class Choicers:
 				best_error = 0.5
 				best_test  = None 
 				for test in sub_tests:
-					error = AdaBoost.get_error(test, probabilities, training_set)
+					error = Adaboost.get_error(test, probabilities, training_set)
 					if error <= 0.5 - epsilon or error >= 0.5 + epsilon: return test
 					elif error >= best_error:
 						best_error = error
@@ -90,7 +90,7 @@ class Choicers:
 				best_test  = None
 				for choice in choices:
 					test  = tests[choice]
-					error = AdaBoost.get_error(test, probabilities, training_set)
+					error = Adaboost.get_error(test, probabilities, training_set)
 					if error <= 0.5 - epsilon or error >= 0.5 + epsilon: return test
 					elif error >= best_error:
 						best_error = error

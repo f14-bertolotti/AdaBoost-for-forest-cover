@@ -1,4 +1,4 @@
-from AdaBoost import AdaBoost
+from Adaboost import Adaboost
 
 class Measurers:
 
@@ -6,7 +6,7 @@ class Measurers:
 		''' Returns (tp, tn, fp, fn) all in one. '''
 		tp, tn, fp, fn = 0, 0, 0, 0
 		for sample in samples:
-			y_pred = AdaBoost.predict_AdaBoost(weights, predictors, sample)
+			y_pred = Adaboost.predict_AdaBoost(weights, predictors, sample)
 			y_true = sample[-1]
 			if   y_pred == +1 and y_true == +1: tp += 1
 			elif y_pred == -1 and y_true == -1: tn += 1

@@ -73,7 +73,7 @@ if __name__ == '__main__':
 					test_set             = Utils.onevsall(partitions[i]                              , clss)
 					insider.training_set = training_set
 					insider.test_set     = test_set
-					weights, predictors  = AdaBoost.train(T, training_set, mesurer = insider, choicer = choicer)
+					weights, predictors  = Adaboost.train(T, training_set, mesurer = insider, choicer = choicer)
 
 				insider.save()
 				insider.close()
@@ -94,7 +94,7 @@ if __name__ == '__main__':
 		test_set             = Utils.onevsall(test_data    , clss)
 		insider.training_set = training_set
 		insider.test_set     = test_set	
-		weights, predictors  = AdaBoost.train(T, training_set, mesurer = insider, choicer = best_algo[0])
+		weights, predictors  = Adaboost.train(T, training_set, mesurer = insider, choicer = best_algo[0])
 		test_acc += (insider.best_val_acc()-test_acc)/(j+1)
 		insider.save()
 		insider.close()
