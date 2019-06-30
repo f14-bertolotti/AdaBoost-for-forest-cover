@@ -18,6 +18,10 @@ if __name__ == '__main__':
 	if not os.path.isdir('./images'):
 		os.mkdir('./images')
 
+	# data directory ###
+	if not os.path.isdir('./data'):
+		os.mkdir('./data')
+
 	# dataset download ###
 	dataset_path = "./data/forest_dataset"
 	if not os.path.isfile("./data/forest_dataset"):
