@@ -101,3 +101,4 @@ if __name__ == '__main__':
 
 
 	print("best test acc: {}".format(test_acc))
+# best test acc: 0.9220521541950113
