@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.9)  30 JUN 2019 12:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.3.9)  30 JUN 2019 13:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -811,10 +811,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 202--205
 File: ../images/random_choice_class_2_cross_val_4.png Graphic file (type png)
 <use ../images/random_choice_class_2_cross_val_4.png>
 Package pdftex.def Info: ../images/random_choice_class_2_cross_val_4.png  used 
-on input line 348.
+on input line 347.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 345--354
+Overfull \hbox (15.0pt too wide) in paragraph at lines 344--353
 [][] 
  []
 
@@ -824,10 +824,10 @@ File: ../images/best_with_threshold_class_2_cross_val_4.png Graphic file (type
 png)
 <use ../images/best_with_threshold_class_2_cross_val_4.png>
 Package pdftex.def Info: ../images/best_with_threshold_class_2_cross_val_4.png 
- used on input line 358.
+ used on input line 357.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 355--364
+Overfull \hbox (15.0pt too wide) in paragraph at lines 354--363
 [][] 
  []
 
@@ -837,15 +837,15 @@ File: ../images/random_selctor_best_test_class_2_cross_val_4.png Graphic file (
 type png)
 <use ../images/random_selctor_best_test_class_2_cross_val_4.png>
 Package pdftex.def Info: ../images/random_selctor_best_test_class_2_cross_val_4
-.png  used on input line 368.
+.png  used on input line 367.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 365--380
+Overfull \hbox (15.0pt too wide) in paragraph at lines 364--379
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 381--384
+Underfull \hbox (badness 10000) in paragraph at lines 380--383
 
  []
 
@@ -856,10 +856,10 @@ _val_4.png>]
 File: ../images/random_choice_class_4_cross_val_4.png Graphic file (type png)
 <use ../images/random_choice_class_4_cross_val_4.png>
 Package pdftex.def Info: ../images/random_choice_class_4_cross_val_4.png  used 
-on input line 393.
+on input line 392.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 390--399
+Overfull \hbox (15.0pt too wide) in paragraph at lines 389--398
 [][] 
  []
 
@@ -869,10 +869,10 @@ File: ../images/best_with_threshold_class_4_cross_val_4.png Graphic file (type
 png)
 <use ../images/best_with_threshold_class_4_cross_val_4.png>
 Package pdftex.def Info: ../images/best_with_threshold_class_4_cross_val_4.png 
- used on input line 403.
+ used on input line 402.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 400--409
+Overfull \hbox (15.0pt too wide) in paragraph at lines 399--408
 [][] 
  []
 
@@ -882,10 +882,10 @@ File: ../images/random_selctor_best_test_class_4_cross_val_4.png Graphic file (
 type png)
 <use ../images/random_selctor_best_test_class_4_cross_val_4.png>
 Package pdftex.def Info: ../images/random_selctor_best_test_class_4_cross_val_4
-.png  used on input line 413.
+.png  used on input line 412.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 410--423
+Overfull \hbox (15.0pt too wide) in paragraph at lines 409--422
 [][]
  []
 
@@ -897,10 +897,10 @@ _val_4.png>]
 File: ../images/best_predictor_class_1_cross_val_1.png Graphic file (type png)
 <use ../images/best_predictor_class_1_cross_val_1.png>
 Package pdftex.def Info: ../images/best_predictor_class_1_cross_val_1.png  used
- on input line 439.
+ on input line 438.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 436--444
+Overfull \hbox (15.0pt too wide) in paragraph at lines 435--443
 [][] 
  []
 
@@ -909,10 +909,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 436--444
 File: ../images/best_predictor_class_2_cross_val_1.png Graphic file (type png)
 <use ../images/best_predictor_class_2_cross_val_1.png>
 Package pdftex.def Info: ../images/best_predictor_class_2_cross_val_1.png  used
- on input line 448.
+ on input line 447.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 445--453
+Overfull \hbox (15.0pt too wide) in paragraph at lines 444--452
 [][] 
  []
 
@@ -921,10 +921,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 445--453
 File: ../images/best_predictor_class_3_cross_val_1.png Graphic file (type png)
 <use ../images/best_predictor_class_3_cross_val_1.png>
 Package pdftex.def Info: ../images/best_predictor_class_3_cross_val_1.png  used
- on input line 458.
+ on input line 457.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 455--463
+Overfull \hbox (15.0pt too wide) in paragraph at lines 454--462
 [][] 
  []
 
@@ -933,10 +933,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 455--463
 File: ../images/best_predictor_class_4_cross_val_1.png Graphic file (type png)
 <use ../images/best_predictor_class_4_cross_val_1.png>
 Package pdftex.def Info: ../images/best_predictor_class_4_cross_val_1.png  used
- on input line 467.
+ on input line 466.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 464--472
+Overfull \hbox (15.0pt too wide) in paragraph at lines 463--471
 [][] 
  []
 
@@ -945,10 +945,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 464--472
 File: ../images/best_predictor_class_5_cross_val_1.png Graphic file (type png)
 <use ../images/best_predictor_class_5_cross_val_1.png>
 Package pdftex.def Info: ../images/best_predictor_class_5_cross_val_1.png  used
- on input line 476.
+ on input line 475.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 473--481
+Overfull \hbox (15.0pt too wide) in paragraph at lines 472--480
 [][] 
  []
 
@@ -957,10 +957,10 @@ Overfull \hbox (15.0pt too wide) in paragraph at lines 473--481
 File: ../images/best_predictor_class_6_cross_val_1.png Graphic file (type png)
 <use ../images/best_predictor_class_6_cross_val_1.png>
 Package pdftex.def Info: ../images/best_predictor_class_6_cross_val_1.png  used
- on input line 485.
+ on input line 484.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 482--490
+Overfull \hbox (15.0pt too wide) in paragraph at lines 481--489
 [][] 
  []
 
@@ -972,10 +972,10 @@ _class_2_cross_val_1.png> <../images/best_predictor_class_3_cross_val_1.png> <.
 File: ../images/best_predictor_class_7_cross_val_1.png Graphic file (type png)
 <use ../images/best_predictor_class_7_cross_val_1.png>
 Package pdftex.def Info: ../images/best_predictor_class_7_cross_val_1.png  used
- on input line 494.
+ on input line 493.
 (pdftex.def)             Requested size: 206.88834pt x 195.71503pt.
 
-Overfull \hbox (15.0pt too wide) in paragraph at lines 491--503
+Overfull \hbox (15.0pt too wide) in paragraph at lines 490--502
 [][]
  []
 
@@ -989,7 +989,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  6953 strings out of 492982
  98596 string characters out of 6134897
- 235012 words of memory out of 5000000
+ 236012 words of memory out of 5000000
  10371 multiletter control sequences out of 15000+600000
  14564 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1019,7 +1019,7 @@ cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
 t9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/wasy2-ps/wasy10.pfb>
-Output written on Adaboost.pdf (10 pages, 1155166 bytes).
+Output written on Adaboost.pdf (10 pages, 1155546 bytes).
 PDF statistics:
  176 PDF objects out of 1000 (max. 8388607)
  107 compressed objects within 2 object streams

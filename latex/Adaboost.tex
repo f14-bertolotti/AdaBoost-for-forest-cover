@@ -42,7 +42,7 @@
 \section{Algorithm Description}
 \subsection{Adaboost}
 
-The general idea is to get a predictor from a weighted sum of other predictor, using appropriate weights.\\\\
+The general idea is to get a predictor from a weighted sum of other predictors, using appropriate weights.\\\\
 Let $D$ be the joint distribution of $X\times Y = D$, where $X \in \mathcal{X}$ and $Y \in \mathcal{Y}$ and 
 $\mathcal{Y} =\{-1,+1\}$.\\
 Let $S$ be the training set, such that $S=\{(x_t,y_t)\}_{t=1}^{m}$.
@@ -50,7 +50,7 @@ where each $(x_t, y_t)$ is drawn from $D$.\\
 Let $l$ be the $0/1$ loss functions, such that $l(y,\hat{y}) = \mathbbm{1}{\{y \neq \hat{y}\}}$. \\
 Let $l_S:H\rightarrow[0,1]$ be the training loss, $l_S(h) = \frac{1}{m}\sum_{t=1}^{m} l(h(x_t),y_t)$,
 for $h\in H$.\\
-Let $l_D:H\rightarrow[0,1]$ be the statistical loss, $l_D(h) = \E [l(h(X),Y)]$.\\
+Let $l_D:H\rightarrow[0,1]$ be the statistical loss, $l_D(h) = \underset{X,Y \sim D}{\E} [l(h(X),Y)]$.\\
 Let $h_1, h_2, \dots, h_T$ be predictors, such that $\forall i=1,2,\dots,T : h_t:\mathcal{X}\rightarrow\mathcal{Y}$.\\
 
 Adaboost will output the following predictor $f$:
@@ -138,7 +138,7 @@ statement is particularly obvious in the first term of $(10)$.
   \label{fig:x(x-1)}
 \end{figure}
 
-Now we have still to clarify the steo $(3)$, signed as $(*)$. Indeed, this is not true for all $\mathbb{P}$.
+Now we have still to clarify the step $(3)$, signed as $(*)$. Indeed, this is not true for all $\mathbb{P}$.
 But, if we choose:
 
 $$
@@ -174,19 +174,19 @@ So, we have:
 
 Now note the followings:
 \begin{itemize}
-	\item Adaboost Can use good predictors as bad one, in fact, bad predictors will have high $\epsilon_i$, and so,
+	\item Adaboost Can use good predictors as a bad one, in fact, bad predictors will have high $\epsilon_i$, and so,
 	a negative weight.
 	\item If the i-th predictor has $\frac{1}{2}$ accuracy over samples weighted with $\mathbb{P}_i$ then it has
 	no use in the classification, since it gets a weight of $0$.
 \end{itemize}
 
 \subsection{Tree stump}
-Tree predictor are classifier particularly suited for problems with discrete or non euclidean domains, like:
+Tree predictors are classifiers particularly suited for problems with discrete or non-euclidean domains, like:
 
 $$\mathcal{X}=\{\underbrace{\{young, adult, old\}}_{age}\times\underbrace{\{yes, no\}}_{smoker}\times\underbrace{\{underweight,normal,overweight,obese\}}_{weight}\}.$$
 
 The general idea is to take tests, functions of the form $f:\mathcal{X}\rightarrow\mathcal{Y}$ combining them in a tree
-where each leaf is labelled with a class $y \in \mathcal{Y}$ and each node is a test.
+where each leaf is labeled with a class $y \in \mathcal{Y}$ and each node is a test.
 Each sample $x \in \mathcal{X}$ is then routed towards a leaf and classified with the respective label.
 The training set is used for two reasons: 
 
@@ -194,72 +194,71 @@ The training set is used for two reasons:
 	\item $S$ is used to decide which label to assign to each leaf. Given the leaf $l$ the 
 	the label $y$ assigned to $l$ is the majority of labels of samples $(x_t,y_t)\in S$ routed to $l$.
 	$$l_y = majority\{y_t | (x_t,y_t) \in S \wedge x_t \text{ routed to } l\}$$
-	\item $S$ can also be used in the splitting decision (adding a new test to the tree). for example, we could split
-	the leaf with lower accuracy and we could add the test which maximize the mean of the accuracies of the new leaves
+	\item $S$ can also be used in the splitting decision (adding a new test to the tree). For example, we could split
+	the leaf with lower accuracy and we could add the test which maximizes the mean of the accuracies of the new leaves
 	(the accuracy is measured in respect to $S$).
 \end{enumerate}
 
-Given any tree its training error is always less than $\frac{1}{2}$ (in binary classification), 
+Given any tree, its training error is always less than $\frac{1}{2}$ (in binary classification), 
 since we apply the majority label to the leaf's class.
 And, any new split can only reduce the training error.\\
 
 Tree stumps are tree predictors with only one node, in fact, they are just tests.
 
 \subsection{Adaboost with stumps}
-Lets suppose that $\mathcal{Y} = \{-1,+1\}$, so that, we are in a binary classification setting.
-The alogithm works as follow:
+Let us suppose that $\mathcal{Y} = \{-1,+1\}$, so that, we are in a binary classification setting.
+The algorithm works as follow:
 
 \begin{lstlisting}[language=Java]
 Let S be the training set.
-Let T be number of boosting rounds.
+Let T be the number of boosting rounds.
 Let F be set of possible tests (stumps).
 Let P_1 be the uniform probability distribution over S.
 For i = 1,2,...,T:
 	choose a test f_i in F.
-	compute the weighted with P_i training error e_i for f_i.
+	compute the e_i training error weighted with P_i, for f_i.
 	compute the predictor's weight w_i.
 	compute the new probability distribution P_i+1.
 Return ((w_1,..,w_T),(f_1,...,f_T)).
 \end{lstlisting}
 
 Now the only part that is unclear is about how to choose the next test.
-In fact, this is not important, Adaboost works even with random chosen tests. But, this affects the number of iteration
+In fact, this is not important, Adaboost works even with randomly chosen tests. But, this affects the number of iteration
 required to convergence.
 
 So, i tried the following strategies for the stump generation:
 \begin{enumerate}
-	\item Fully random. the next test is chosen from a pre-generate set of possible test.
-	\item A variable is chosen randomly and the best test is searched from all test related to that variable.
+	\item Fully random. the next test is chosen from a pre-generated set of possible tests.
+	\item A variable is chosen randomly and the best test is searched from all tests related to that variable.
 	For the sake of speed if a test has an error that differs of $0.001$ from $\frac{1}{2}$ is directly chosen.
-	\item The set of possible test is shuffled and than the best is seached sequentially. Again, for the sake
-	of speed if the test error differs from $\frac{1}{2}$ for more than $0.001$ then is directly chosen.
+	\item The set of possible tests is shuffled and then the best is searched sequentially. Again, for the sake
+    of speed if the test error differs from $\frac{1}{2}$ for more than $0.001$ then is directly chosen.
 \end{enumerate}
 
 \subsection{Cross-Validation}
-Cross validation, given a learning algorithm $A$ is a good method to approximate 
-as close as possible the statistical error. The idea is to run $A$ more times over different
-training set and test set. The mean of different test error should be close to the statistical error.
+Cross-validation, given a learning algorithm $A$ is a good method to approximate as closely as possible the statistical error. The idea is to run $A$ more times over different
+training set and test set. The mean of different test errors should be close to the statistical error.
 
-More precisely, given the dataset $S$. split $S$ in $k$ partitions $S_1, S_2, \dots S_k$ where each of the 
+More precisely, given the dataset $S$. split $S$ in $k$ partitions $S_1, S_2, \dots S_k$ where each of them 
 has size of $\frac{|S|}{k}$ and return:
 
 $$\frac{1}{K}\sum_{i=1}^{i=k} l_{S_i}(A(S\setminus S_i)).$$
 
 Often learning algorithms may have hyperparameters, so we need to test essentially different algorithms $A_1,\dots,A_r$.
-We may use the cross-validation to find the one with smallest meaned test error. However,
+We may use cross-validation to find the one with the smallest meaned test error. However,
 it is possible that we have found one $A_l$ that is good on the dataset but not on the real statistical data,
-in this case, we are overffiting in respect to the hyperparameters and our test error doesn't mean too much. 
+in this case, we are overfitting in respect to the hyperparameters and our test error doesn't mean too much. 
 So to protect ourselves from this rather unfortunate case we split $S$ in two $S_1$ and $S_2$.
-$S_1$ will be used normally with the cross-validation, meanwhile the purpose of $S_2$ is to have
+$S_1$ will be used normally with the cross-validation, meanwhile, the purpose of $S_2$ is to have
 unseen data to test our best algorithm.
 
 \section{Forest Cover dataset}
 
-The dataset is composed of $15120$ records. Each record has $56$ attributes where the firs one
-is an unique identifier and the last one the class (or cover type), that ranges from $1$ to $7$.
-Of course this two attribute will be excluded from the classification.
+The dataset is composed of $15120$ records. Each record has $56$ attributes where the first one
+is a unique identifier and the last one the class (or cover type), which ranges from $1$ to $7$.
+Of course, these two attributes will be excluded from the classification.
 Our input data are both binary and integers and we have variables as Elevation, Aspect, Slope, etc.
-Lastly, all classes are the $\sim 14\%$ of the whole dataset, so, there are not over rappresented classes.
+Lastly, all classes are the $\sim 14\%$ of the whole dataset, so, there are not over represented classes.
 
 \section{Experiment description}
 \subsection{Tests generation (stumps)}
@@ -274,19 +273,19 @@ calculated the percentile, for each $0.001\%$, so that, for a list like $[1,2,3,
 I take only $[0,10,20,\dots,10000]$.
 
 In conlusion, for an attribute $\mathcal{X}_i$ with seen values $\in [1,10000]$, I generate the list of tests
-$[f_{(14,0)},f_{(14,10)}, \\f_{(14,20)},\dots, f_{(14,10000)}]$. This choice is just for the sake of
+$[f_{(i,0)},f_{(i,10)}, \\f_{(1i4,20)},\dots, f_{(i,10000)}]$. This choice is just for the sake of
 not having too many tests.
 
 \subsection{The test choice}
-Since Adaboost benefits of strongly erroneous or accurate predictors, it make much sense to search
-for these type of predictors. So, when we want to know how a predictor behaves at the i-th step of Adaboost
+Since Adaboost benefits of strongly erroneous or accurate predictors, it makes much sense to search
+for these types of predictors. So, when we want to know how a predictor behaves at the i-th step of Adaboost
 we just need to compute. 
 $$\epsilon_f = \mathbb{P}_i(f(x_t) y_t = -1)$$
 The far the predictor strays from $\frac{1}{2}$ the better it is.
 Again, the strategies adopted for the search are: fully random, shuffled best and random attribute best test.
 
 \subsection{Measures}
-I have measured three common metrics: accuracy, precision and recall.
+I have measured three common metrics: accuracy, precision, and recall.
 Each one of the previous can be computed easily by computing the followings:
 \begin{itemize}
 	\item true positives:
@@ -300,7 +299,7 @@ Each one of the previous can be computed easily by computing the followings:
 \end{itemize}
 where:
 \begin{itemize}
-	\item Accuracy is the rate correct predictions against all predictions.
+	\item Accuracy is the rate of correct predictions against all predictions.
 	$$accuracy = \frac{tp+tn}{tp+fn+fp+tn}$$
 	\item Recall is the rate of true labels classified as true over all true labels.
 	$$recall = \frac{tp}{tp+fn}$$
@@ -334,9 +333,9 @@ How does all works:
 
 \section{Experiment results}
 
-Now we will compare results obtained for different strategies and different class.
+Now we will compare results obtained for different strategies and different classes.
 The best strategy between the one listed is \textit{random attribute best choice} which has 
-reached a meaened (from different classes) test error of $0.922$ using $1001$ stump predictors.
+reached a meaned (from different classes) test error of $0.922$ using $1001$ stump predictors.
 
 \newpage
 lets start comparing results for the most hard class (class 2):
@@ -346,8 +345,8 @@ lets start comparing results for the most hard class (class 2):
 	\begin{center}
 	\textbf{Random.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/random_choice_class_2_cross_val_4.png}
-	\captionof{figure}{A plot displaying the results for random choice strategy for the class 2 with 
-	4 partition of cross-validation.}
+	\captionof{figure}{A plot displaying the results for random choice strategy for class 2 with 
+	4 partitions of cross-validation.}
 	\label{random}
 	\end{center}
 	\end{minipage}
@@ -356,8 +355,8 @@ lets start comparing results for the most hard class (class 2):
 	\begin{center}
 	\textbf{Shuffled Best.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_with_threshold_class_2_cross_val_4.png}
-	\captionof{figure}{A plot displaying the results for shuffled best test strategy for the class 2 with 
-	4 partition of cross-validation.}
+	\captionof{figure}{A plot displaying the results for shuffled best test strategy for class 2 with 
+	4 partitions of cross-validation.}
 	\label{shuffled}
 	\end{center}
 	\end{minipage}
@@ -366,19 +365,19 @@ lets start comparing results for the most hard class (class 2):
 	\begin{center}
 	\textbf{Random attribute best test.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/random_selctor_best_test_class_2_cross_val_4.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 2 with 
-	4 partition of cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 2 with 
+	4 partitions of cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
 	\text{ }
 	\\*
-	Here the best class accuracy barely reaches the $90\%$, And recall is extremely low, which means that
-	actually we are not able to classify well the data. Instead, the $90\%$ seems even too good, and probably
-	the predictor classify most of the label as \textit{false}. This is no surprise, since the large majority
-	of them is \textit{false} (about $\sim 85 \%$).
+	Here the best class accuracy barely reaches $90\%$, And recall is extremely low, which means that
+	actually, we are not able to classify well the data. Instead, the $90\%$ seems even too good, and probably
+	the predictor classifies most of the label as \textit{false}. This is no surprise since the large majority
+	of them are \textit{false} (about $\sim 85 \%$).
 	
-	As we can see the \textit{random} strategy is the worst behaving one, and despite being the most fast, even after
+	As we can see the \textit{random} strategy is the worst behaving one, and despite being the fastest, even after
 	1000 Adaboost's iteration it doesn't catch up with the others. Meanwhile \textit{Random attribute best test} seems to
 	converge faster, in number of iteration, than others.\\
 \end{multicols}
@@ -391,8 +390,8 @@ Now lets see for the most easy class (class4):
 	\begin{center}
 	\textbf{Random.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/random_choice_class_4_cross_val_4.png}
-	\captionof{figure}{A plot displaying the results for random choice strategy for the class 4 with 
-	4 partition of cross-validation.}
+	\captionof{figure}{A plot displaying the results for random choice strategy for class 4 with 
+	4 partitions of cross-validation.}
 	\label{random}
 	\end{center}
 	\end{minipage}
@@ -401,8 +400,8 @@ Now lets see for the most easy class (class4):
 	\begin{center}
 	\textbf{Shuffled Best.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_with_threshold_class_4_cross_val_4.png}
-	\captionof{figure}{A plot displaying the results for shuffled best test strategy for the class 4 with 
-	4 partition of cross-validation.}
+	\captionof{figure}{A plot displaying the results for shuffled best test strategy for class 4 with 
+	4 partitions of cross-validation.}
 	\label{shuffled}
 	\end{center}
 	\end{minipage}
@@ -411,15 +410,15 @@ Now lets see for the most easy class (class4):
 	\begin{center}
 	\textbf{Random attribute best test.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/random_selctor_best_test_class_4_cross_val_4.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 4 with 
-	4 partition of cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 4 with 
+	4 partitions of cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
 	\text{ }
 	\\*
-	Here, the previous problem doesn't seems to appear. 
-	Even if the mojority of label is false, the predictor has learned well how to distinguish the class 4 from the other.
+	Here, the previous problem doesn't seem to appear. 
+	Even if the majority of labels is false, the predictor has learned well how to distinguish class 4 from the other.
 	
 	The previous reasoning applies also in this case, and the best strategy seems to be \textit{random attribute best test}
 	Here the best class accuracy reaches $\sim 97\%$. 
@@ -427,7 +426,7 @@ Now lets see for the most easy class (class4):
 \newpage
 
 
-Finally, we have ascertained that the strategy which reaches best results and faster is \textit{random attribute best test}.
+Finally, we have ascertained that the strategy which reaches the best results and faster is \textit{random attribute best test}.
 And now, we show the values obtained when this algorithm is trained on the whole validation data and tested on
 completely unseen records:
 
@@ -437,7 +436,7 @@ completely unseen records:
 	\begin{center}
 	\textbf{Class 1.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_predictor_class_1_cross_val_1.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 1 without cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 1 without cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
@@ -446,7 +445,7 @@ completely unseen records:
 	\begin{center}
 	\textbf{Class 2.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_predictor_class_2_cross_val_1.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 2 without cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 2 without cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
@@ -456,7 +455,7 @@ completely unseen records:
 	\begin{center}
 	\textbf{Class 3.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_predictor_class_3_cross_val_1.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 3 without cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 3 without cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
@@ -465,7 +464,7 @@ completely unseen records:
 	\begin{center}
 	\textbf{Class 4.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_predictor_class_4_cross_val_1.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 4 without cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 4 without cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
@@ -474,7 +473,7 @@ completely unseen records:
 	\begin{center}
 	\textbf{Class 5.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_predictor_class_5_cross_val_1.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 5 without cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 5 without cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
@@ -483,7 +482,7 @@ completely unseen records:
 	\begin{center}
 	\textbf{Class 6.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_predictor_class_6_cross_val_1.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 6 without cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 6 without cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
@@ -492,14 +491,14 @@ completely unseen records:
 	\begin{center}
 	\textbf{Class 7.}\par\medskip
 	\includegraphics[width=0.9\columnwidth]{../images/best_predictor_class_7_cross_val_1.png}
-	\captionof{figure}{A plot displaying the results for random attribute best test strategy for the class 7 without cross-validation.}
+	\captionof{figure}{A plot displaying the results for random attribute best test strategy for class 7 without cross-validation.}
 	\label{best}
 	\end{center}
 	\end{minipage}
 	\text{ }
 	\\*
 	In conclusion, even with more training data classes $1,2,3$ and $6$ seems a bit problematic, 
-	meanwhile classes $4,5$ and $7$ behave very well. 
+	meanwhile, classes $4,5$ and $7$ behave very well. 
 
 \end{multicols}
 
